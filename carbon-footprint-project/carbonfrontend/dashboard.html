@@ -6,19 +6,115 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 30px;
+      background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+      color: #333;
     }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #1b5e20;
+    }
+
     section {
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin-bottom: 20px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
+    section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
     h2 {
-      color: #2c7;
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #2e7d32;
+      border-bottom: 2px solid #c8e6c9;
+      padding-bottom: 6px;
     }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #43a047;
+      box-shadow: 0 0 0 2px rgba(67, 160, 71, 0.2);
+    }
+
     button {
-      margin-top: 5px;
+      background: linear-gradient(135deg, #43a047, #66bb6a);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #388e3c, #4caf50);
+      transform: scale(1.03);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 10px;
+    }
+
+    li {
+      background: #f9fbe7;
+      margin-bottom: 8px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    li button {
+      padding: 6px 12px;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    #alert {
+      margin-top: 10px;
+      font-weight: 600;
+      color: #d32f2f;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+
+      section {
+        padding: 15px;
+      }
     }
   </style>
 </head>
@@ -27,21 +123,19 @@
 
 <h1>🌱 Carbon Footprint Dashboard</h1>
 
-<!-- ================= MILESTONE 1 ================= -->
 <section>
   <h2>1️⃣ Login</h2>
-  <input id="email" placeholder="Email"><br>
-  <input id="password" type="password" placeholder="Password"><br>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
   <button onclick="login()">Login</button>
 </section>
 
-<!-- ================= MILESTONE 2 ================= -->
 <section>
   <h2>2️⃣ Carbon Survey</h2>
-  <input id="transport" placeholder="Transport Mode"><br>
-  <input id="diet" placeholder="Diet Type"><br>
-  <input id="energy" type="number" placeholder="Energy Usage"><br>
-  <input id="freq" placeholder="Frequency"><br>
+  <input id="transport" placeholder="Transport Mode">
+  <input id="diet" placeholder="Diet Type">
+  <input id="energy" type="number" placeholder="Energy Usage">
+  <input id="freq" placeholder="Frequency">
   <button onclick="submitSurvey()">Submit Survey</button>
   <p id="alert"></p>
 </section>
@@ -52,10 +146,9 @@
   <button onclick="loadHistory()">Load History</button>
 </section>
 
-<!-- ================= MILESTONE 3 ================= -->
 <section>
   <h2>3️⃣ Set Goal</h2>
-  <input id="target" type="number" placeholder="Target Carbon"><br>
+  <input id="target" type="number" placeholder="Target Carbon">
   <button onclick="createGoal()">Create Goal</button>
 </section>
 
@@ -65,7 +158,6 @@
   <button onclick="loadLeaderboard()">Load Leaderboard</button>
 </section>
 
-<!-- ================= MILESTONE 4 ================= -->
 <section>
   <h2>🛒 Eco Marketplace</h2>
   <ul id="marketplace"></ul>
@@ -73,9 +165,8 @@
 </section>
 
 <script>
-const USER_ID = 7; // your tested user ID
+const USER_ID = 7;
 
-/* ---------- LOGIN ---------- */
 function login() {
   fetch("http://localhost:8080/api/users/login", {
     method: "POST",
@@ -89,7 +180,6 @@ function login() {
   .then(() => alert("Login successful"));
 }
 
-/* ---------- SURVEY ---------- */
 function submitSurvey() {
   fetch("http://localhost:8080/api/survey/" + USER_ID, {
     method: "POST",
@@ -112,7 +202,6 @@ function submitSurvey() {
   });
 }
 
-/* ---------- CARBON HISTORY (FIXED) ---------- */
 function loadHistory() {
   const historyList = document.getElementById("historyList");
   historyList.innerHTML = "";
@@ -132,7 +221,6 @@ function loadHistory() {
     });
 }
 
-/* ---------- GOAL ---------- */
 function createGoal() {
   fetch("http://localhost:8080/api/goals", {
     method: "POST",
@@ -146,7 +234,6 @@ function createGoal() {
   .then(() => alert("Goal created successfully"));
 }
 
-/* ---------- LEADERBOARD ---------- */
 function loadLeaderboard() {
   const list = document.getElementById("leaderboard");
   list.innerHTML = "";
@@ -162,7 +249,6 @@ function loadLeaderboard() {
     });
 }
 
-/* ---------- MARKETPLACE ---------- */
 function loadMarketplace() {
   const list = document.getElementById("marketplace");
   list.innerHTML = "";
@@ -195,4 +281,6 @@ function buy(itemId) {
 
 </body>
 </html>
+
+
 
